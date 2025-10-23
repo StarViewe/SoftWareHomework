@@ -168,6 +168,56 @@ V1.0版本使用JSON文件存储数据：
 
 查看 `ITERATION_PLAN.md` 了解下一版本的迭代计划。
 
+## 部署到生产环境
+
+### 🐳 Docker部署（推荐）
+
+项目已配置完整的Docker部署方案，支持一键部署到华为云或其他云平台。
+
+#### 快速部署
+```bash
+# 方式1：使用一键部署脚本
+bash deploy.sh build    # 本地构建并推送
+bash deploy.sh pull     # 服务器拉取并启动
+
+# 方式2：手动部署
+docker build -t personal-blog:v1.0 .
+docker-compose up -d
+```
+
+#### 部署文档
+- 📘 **新手入门** → [DOCKER_GUIDE.md](DOCKER_GUIDE.md) - Docker快速指南
+- 📗 **华为云部署** → [HUAWEI_CLOUD_DEPLOY.md](HUAWEI_CLOUD_DEPLOY.md) - 详细部署流程
+- 📙 **部署总结** → [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - 快速参考手册
+
+#### 已提供的配置文件
+- `Dockerfile` - 多阶段构建配置
+- `docker-compose.yml` - 容器编排配置
+- `.dockerignore` - Docker忽略规则
+- `deploy.sh` - 自动化部署脚本
+- `nginx.conf` - Nginx反向代理配置
+- `env.example` - 环境变量示例
+
+### 🌐 传统部署
+
+如果不使用Docker，可以按以下步骤部署：
+
+1. **构建前端**
+   ```bash
+   cd client
+   npm install
+   npm run build
+   ```
+
+2. **部署后端**
+   ```bash
+   npm install --production
+   NODE_ENV=production node server/index.js
+   ```
+
+3. **配置Nginx**（可选）
+   - 使用项目中的 `nginx.conf` 配置反向代理
+
 ## 许可证
 
 MIT License
